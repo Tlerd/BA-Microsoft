@@ -15,6 +15,7 @@ The plugin has no paths that point to one machine. It works in any project.
 | Part | File | Purpose |
 |---|---|---|
 | Skill `ste` | `skills/ste/SKILL.md` | Sentence and structure rules for English documents |
+| Skill `ba-intake` | `skills/ba-intake/SKILL.md` | Interviews you about an outcome and writes an intake brief |
 | Skill `ba-docs` | `skills/ba-docs/` | Writes requirements documents from outlines or from your templates |
 | Skill `ba-diagrams` | `skills/ba-diagrams/` | Chooses the model and writes it in Mermaid |
 | Skill `ba-review` | `skills/ba-review/SKILL.md` | Finds defects in a requirements document and reports them |
@@ -51,6 +52,7 @@ claude --plugin-dir /path/to/BA-Microsoft
 
 Give the task in normal words:
 
+- "I want a page where a club member books a court. Be the business analyst."
 - "Write the vision and scope document from `notes.md`."
 - "Write the use case Book a Court."
 - "Draw the ERD and the state diagram of a Booking."

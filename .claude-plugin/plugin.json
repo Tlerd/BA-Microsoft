@@ -1,0 +1,19 @@
+{
+  "name": "ba-kit",
+  "version": "0.2.0",
+  "description": "Requirements documents, diagrams, and plain technical English (80% of the way to ASD-STE100): four skills, one lint hook, three scripts.",
+  "author": {
+    "name": "Tlerd",
+    "url": "https://github.com/Tlerd"
+  },
+  "repository": "https://github.com/Tlerd/BA-Mircosoft",
+  "keywords": [
+    "requirements",
+    "business-analysis",
+    "srs",
+    "use-cases",
+    "mermaid",
+    "ste100",
+    "technical-writing"
+  ]
+}

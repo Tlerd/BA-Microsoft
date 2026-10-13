@@ -1,0 +1,66 @@
+---
+name: ba-docs
+description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, a data dictionary, a glossary, or a risk list.
+---
+
+The method follows mainstream requirements engineering practice (Wiegers and Beatty, *Software Requirements*, 3rd edition): business requirements first, then user requirements, then functional requirements, each traced to the one before.
+
+## Format authority
+
+1. **The project's own templates.** If `AGENTS.md` names a template folder, or `docs/requirements/templates/` exists, those templates decide headings and order. Read the template and any worked example beside it in full.
+2. **Otherwise** the outlines in [`TEMPLATES.md`](TEMPLATES.md). Read the outline for the document you write.
+
+A template exported from Word can carry inline base64 images. Read such a file through the script, which prints the text only:
+
+```
+node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
+```
+
+## Steps
+
+1. **Read the format authority** for the document type.
+
+2. **Collect the facts.** Read the requirements folder first: each document builds on the one before it (vision and scope → use cases and business rules → SRS → data dictionary). List every section that the sources cannot fill. Ask the user for those facts in one message. A fact that nobody has yet is written as `TBD` with the name of the person who can decide it.
+
+3. **Write the file** in the project's requirements folder (default `docs/requirements/`) with this front matter:
+
+   ```
+   ---
+   ba_doc: srs
+   style: ste80
+   lang: en
+   req_keyword: shall
+   ---
+   ```
+
+   `ba_doc` is one of `vision-scope`, `use-cases`, `srs`, `business-rules`, `data-dictionary`, `glossary`, `risks`, `models`. Documents are in English unless the user asks for another language. Load the `ste` skill before you write.
+
+4. **Label every item** so that other documents can point at it. A label is never reused.
+
+   | Item | Label | Example |
+   |---|---|---|
+   | Business objective, success metric | `BO-n`, `SM-n` | BO-1 |
+   | Feature (vision and scope) | `FE-n` | FE-3 |
+   | Use case; its flows | `UC-n`; `n.0` normal, `n.m` alternative, `n.m.Ek` exception | UC-1, 1.2, 1.0.E1 |
+   | Pre- and postcondition | `PRE-n`, `POST-n` | PRE-1 |
+   | Business rule | `BR-n` | BR-4 |
+   | Functional requirement | hierarchical tag under its feature | `Booking.Pay.Timeout` |
+   | Other SRS requirements | section code and number: `OE` `CO` `DE` `UI` `SI` `CI` `DI` `USE` `PER` `SEC` `SAF` `AVL` `ROB` | PER-2 |
+
+5. **Write each functional requirement** as one sentence that one test can verify:
+
+   - From the system's side: `[condition or trigger], the <system> shall <response>.`
+   - From the user's side: `The <user class> shall be able to <action> <object> [limit or quality].`
+
+   Use the user class by name (Player, Club Manager). Give values with units and say if the end points of a range are included. Two conditions make two requirements. Put the origin after the requirement when it is not the enclosing use case: `(BR-4)`.
+
+6. **Keep one name for one thing.** Before a new domain term goes into a document, add it to `glossary.md` in the requirements folder (table: Term | Definition | Synonyms to avoid). Use the glossary term everywhere.
+
+7. **Add the models.** A context diagram belongs in vision and scope. A state or process model belongs where prose would need a paragraph of conditions. Build them with the `ba-diagrams` skill.
+
+8. **Finish.** The document is done when all of these are true:
+
+   - Every section of the format authority holds content, `TBD` with an owner, or "Not applicable" with the reason.
+   - Every functional requirement traces to a use case or business rule that exists, and every use case has requirements in the SRS once the SRS exists.
+   - `doc-lint` reports 0 findings. The plugin hook runs it on each save and returns the findings. Fix them in the file.
+   - Your closing message lists the open `TBD` items and the facts you assumed.

@@ -1,0 +1,15 @@
+{
+  "name": "ba-kit",
+  "description": "Marketplace for the ba-kit plugin.",
+  "owner": {
+    "name": "Tlerd"
+  },
+  "plugins": [
+    {
+      "name": "ba-kit",
+      "description": "Requirements documents, diagrams, and STE-style checks.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

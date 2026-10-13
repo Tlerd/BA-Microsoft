@@ -207,6 +207,22 @@ mindmap
 Figure 10. Feature tree for CourtBook
 Key: first level = feature (FE-n). Second level = sub-feature.
 
+## Animated arrow
+
+Moving dashes mark the one path that the diagram is about, for example the main flow or a feedback loop. Use it in a `flowchart`. Give the arrow an ID before its operator, then switch the animation on in a separate line.
+
+```mermaid
+flowchart LR
+    Player[Player] e1@-- booking request --> CB((CourtBook))
+    CB -- payment QR code --> Player
+    e1@{ animate: true }
+```
+
+Figure 11. Context diagram with one animated arrow
+Key: moving dashes = the flow under discussion.
+
+The ID syntax needs Mermaid 11.5.0 or later. The preview page has it. An older viewer shows a parse error in place of the diagram, so tell the user where the document will be read.
+
 ## Tables
 
 **Decision table.** One column per rule, with conditions above and actions below. With n yes/no conditions there are at most 2^n columns: account for each one.

@@ -21,7 +21,7 @@ The plugin has no paths that point to one machine. It works in any project.
 | Skill `ba-review` | `skills/ba-review/SKILL.md` | Finds defects in a requirements document and reports them |
 | Hook | `hooks/hooks.json` | Runs `doc-lint` after each `Write` or `Edit` of a marked file |
 | `doc-lint` | `scripts/doc-lint.mjs` | Checks the countable rules. No model call, no network |
-| `diagram-preview` | `scripts/diagram-preview.mjs` | Writes `<file>.diagrams.html` to show each Mermaid block |
+| `diagram-preview` | `scripts/diagram-preview.mjs` | Writes `<file>.diagrams.html` to show each Mermaid block, in the light or dark theme of the browser |
 | `doc-text` | `scripts/doc-text.mjs` | Prints a Markdown file without inline base64 images |
 
 Claude starts each skill by itself when the task matches. You do not type a command.
@@ -128,6 +128,7 @@ Codex and other agents do not load Claude Code plugins. They can read the skill 
 - The linter counts words, sentences, and punctuation. It does not see tenses or meaning. A document with 0 findings can still contain wrong requirements. The skill `ba-review` finds those.
 - The limits for Vietnamese (28 and 35 syllables) are a choice of this tool. ASD-STE100 gives no figures for Vietnamese.
 - The preview page loads Mermaid from `cdn.jsdelivr.net`, so the browser needs a connection.
+- An animated arrow needs Mermaid 11.5.0 or later. The preview page has it. An older Markdown viewer shows a parse error in place of that diagram.
 - This plugin is an independent aid. It does not include the ASD-STE100 dictionary and it does not certify compliance. ASD-STE100 is a trademark of ASD. The standard is free on request from asd-ste100.org.
 
 ## Examples

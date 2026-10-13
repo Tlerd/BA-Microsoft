@@ -8,7 +8,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { basename } from 'node:path';
 
-const MERMAID = 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs';
+const MERMAID = 'https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.esm.min.mjs';
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 const files = process.argv.slice(2);
@@ -40,6 +40,12 @@ for (const file of files) {
   .src { color: #666; font-size: 12px; }
   .error { background: #fde8e8; border: 2px solid #c00; color: #900; padding: .75rem; white-space: pre-wrap; font-family: monospace; }
   #summary { padding: .5rem .75rem; border-radius: 6px; background: #eef; margin-bottom: 1.5rem; }
+  @media (prefers-color-scheme: dark) {
+    body { color: #e6e6e6; background: #16181c; }
+    figure { border-color: #3a3d44; }
+    .src { color: #9aa0a6; }
+    #summary { background: #23283a; }
+  }
 </style>
 <h1>${esc(basename(file))}</h1>
 <div id="summary">Rendering ${figures.length} diagrams...</div>
@@ -54,7 +60,8 @@ ${figures
   .join('\n')}
 <script type="module">
   import mermaid from '${MERMAID}';
-  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: dark ? 'dark' : 'default' });
   let failed = 0;
   // "<" is escaped so that diagram text cannot close this script element.
   const sources = ${JSON.stringify(figures.map((f) => f.code)).replace(/</g, '\\u003c')};
@@ -74,7 +81,7 @@ ${figures
   const s = document.getElementById('summary');
   s.textContent = total + ' diagrams, ' + failed + ' failed';
   s.dataset.failed = failed;
-  if (failed) s.style.background = '#fde8e8';
+  if (failed) s.style.cssText = 'background: #fde8e8; color: #900';
 </script>
 `;
   const target = file.replace(/\.(md|markdown)$/i, '') + '.diagrams.html';

@@ -33,6 +33,7 @@ Notation and a working snippet for each model are in [`NOTATION.md`](NOTATION.md
 - Every arrow has a label, except in a use case diagram.
 - Put this after the block: `Figure N. <title>` on its own line, then one line that tells the reader what the shapes mean.
 - Put the diagram in the document section it explains, and refer to it from the text ("see Figure 3").
+- When the user asks for motion or animation, animate the arrows of one path: see `Animated arrow` in `NOTATION.md`.
 
 ## Steps
 

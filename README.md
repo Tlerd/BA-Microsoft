@@ -32,7 +32,7 @@ The plugin needs Claude Code and Node.js 18 or later.
 Add the marketplace one time:
 
 ```bash
-claude plugin marketplace add Tlerd/BA-Mircosoft
+claude plugin marketplace add Tlerd/BA-Microsoft
 ```
 
 Install the plugin in the project that holds your documents:
@@ -44,7 +44,7 @@ claude plugin install ba-kit@ba-kit --scope project
 To try it for one session without an installation, clone the repository and start Claude Code with the folder:
 
 ```bash
-claude --plugin-dir /path/to/BA-Mircosoft
+claude --plugin-dir /path/to/BA-Microsoft
 ```
 
 ## Use
@@ -131,3 +131,7 @@ Codex and other agents do not load Claude Code plugins. They can read the skill 
 ## Examples
 
 `examples/courtbook/` holds the input (`notes.md`) and the output of three runs with Claude Sonnet: a use case, a glossary, two diagrams, and a review.
+
+## License
+
+MIT. See `LICENSE`.

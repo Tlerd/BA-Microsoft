@@ -137,6 +137,30 @@ Do not install this copy for Claude Code. Claude Code uses the plugin, and the p
 - An animated arrow needs Mermaid 11.5.0 or later. The preview page has it. An older Markdown viewer shows a parse error in place of that diagram.
 - This plugin is an independent aid. It does not include the ASD-STE100 dictionary and it does not certify compliance. ASD-STE100 is a trademark of ASD. The standard is free on request from asd-ste100.org.
 
+## Decisions
+
+### Mermaid parse check
+
+The rule `DIAG-TYPE` only confirms that a Mermaid block starts with a diagram type. It does not parse the block. A syntax error shows only when a person opens the preview.
+
+On 2026-10-14 the eval case `diagrams-state` ran 10 times with the plugin. Mermaid 11.17.2, the version of the preview page, parsed each diagram. 0 of 10 diagrams failed to parse.
+
+So `doc-lint` has no parse check. It would need a package install, and the measure gives no reason for it. A sample of 10 cannot rule out a failure rate below about 26%. The script `evals/parse-mermaid.mjs` repeats the measure. Run it again after a model update or a new Mermaid version. Build the check when one diagram fails.
+
+### MCP server
+
+Decision on 2026-10-14: **no MCP server**. A server adds a process and its tool definitions to each session, so it must earn its place. It would earn it in only two cases:
+
+- A tool must work where hooks and Bash are not available, such as claude.ai or Cowork.
+- The plugin must keep state between sessions, such as requirement IDs and their trace to tests.
+
+Neither case is true today:
+
+- The skills are plain instructions and need no script. Only the `doc-lint` hook and the preview need Node. A server could add only the linter. It would not make the skills write better documents.
+- Every state lives in the project documents. Labels such as `FR-12` sit in the Markdown files, and the skills read them from there.
+
+Look at this decision again when a user needs the linter on claude.ai, or needs a trace table that is not in the documents.
+
 ## Examples
 
 `examples/courtbook/` holds the input (`notes.md`) and the output of three runs with Claude Sonnet: a use case, a glossary, two diagrams, and a review.
@@ -158,6 +182,8 @@ Run date: 2026-10-14. Claude Code 2.1.296. The first three rows come from one ru
 In that first round the no-plugin baseline scored 1.00 on `review-planted-defects` and `ste-rewrite`, so the cases were too easy. Both cases got harder input and stricter graders. Their rows come from two runs for each arm. The harder runs cost $1.52 in all, with two earlier runs that I threw away because a grader was wrong. One or two runs are noisy, so read a small `Δ` as a hint and not as a measurement.
 
 The no-plugin arm found all six planted defects in `review-planted-defects`. Its lower score comes from the report form that the skill `ba-review` defines: the table, the counts, and the check for a missing priority.
+
+The case `diagrams-state` has a regular expression for common syntax slips. A regular expression cannot parse Mermaid, so [Decisions](#mermaid-parse-check) describes a real parse with `evals/parse-mermaid.mjs`.
 
 Each case has a grader that checks if the skill started. That grader is not part of the score. Most graders are regular expressions, so they cost nothing. Only `review-planted-defects` uses a judge model.
 

@@ -135,6 +135,30 @@ Codex and other agents do not load Claude Code plugins. They can read the skill 
 
 `examples/courtbook/` holds the input (`notes.md`) and the output of three runs with Claude Sonnet: a use case, a glossary, two diagrams, and a review.
 
+## Evals
+
+The folder `evals/` holds one case for each skill. The command `claude plugin eval` runs each case with the plugin and without it. `Δ` is the score with the plugin minus the score without it.
+
+| Case | Skill | WITH | W/OUT | Δ |
+|---|---|---|---|---|
+| `intake-undecided-feature` | `ba-intake` | 1.00 | 0.67 | +0.33 |
+| `docs-use-case` | `ba-docs` | 1.00 | 0.00 | +1.00 |
+| `diagrams-state` | `ba-diagrams` | 1.00 | 0.75 | +0.25 |
+| `review-planted-defects` | `ba-review` | 1.00 | 1.00 | 0.00 |
+| `ste-rewrite` | `ste` | 1.00 | 1.00 | 0.00 |
+
+Run date: 2026-10-14. Claude Code 2.1.296. One run for each case and arm, and a list-price cost of $0.98. One run is noisy, so read a small `Δ` as a hint and not as a measurement.
+
+Each case has a grader that checks if the skill started. That grader is not part of the score. Most graders are regular expressions, so they cost nothing. Only `review-planted-defects` uses a judge model.
+
+To run the suite:
+
+```bash
+claude plugin eval . --runs 1 --no-publish
+```
+
+Each run and each judge grader is a paid model call. Run the suite by hand and not on each push. Results go to `evals/results/`, which Git ignores.
+
 ## License
 
 MIT. See `LICENSE`.

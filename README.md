@@ -23,6 +23,7 @@ The plugin has no paths that point to one machine. It works in any project.
 | `doc-lint` | `scripts/doc-lint.mjs` | Checks the countable rules. No model call, no network |
 | `diagram-preview` | `scripts/diagram-preview.mjs` | Writes `<file>.diagrams.html` to show each Mermaid block, in the light or dark theme of the browser |
 | `doc-text` | `scripts/doc-text.mjs` | Prints a Markdown file without inline base64 images |
+| `install-agents` | `scripts/install-agents.mjs` | Installs the skills for Codex, Antigravity, and other agents. See [Other agents](#other-agents) |
 
 Claude starts each skill by itself when the task matches. You do not type a command.
 
@@ -114,14 +115,19 @@ The skill `ba-docs` uses the outlines in `skills/ba-docs/TEMPLATES.md`. To use y
 
 ## Other agents
 
-Codex and other agents do not load Claude Code plugins. They can read the skill files and run the scripts. Add these lines to the `AGENTS.md` file of the project, with the path of your clone:
+The skills follow the [Agent Skills](https://agentskills.io) format, so other agents can load them too. Those agents do not run the plugin hook. The installer gives them a copy of the skills that tells the agent to run `doc-lint` after each save. The Claude Code plugin does not change.
 
-```markdown
-## Requirements documents
+Clone the repository, then run the installer from the folder that must get the skills:
 
-- Requirements documents are in `docs/requirements/`. Before you write one, read `<clone>/skills/ba-docs/SKILL.md` and follow it.
-- After each change to a document, run `node <clone>/scripts/doc-lint.mjs <file>` and fix each finding.
-```
+| Agent | Scope | Command |
+|---|---|---|
+| Codex, Antigravity | One project | `node <clone>/scripts/install-agents.mjs` |
+| Codex | All projects | `node <clone>/scripts/install-agents.mjs --to ~/.agents` |
+| Antigravity | All projects | `node <clone>/scripts/install-agents.mjs --to ~/.gemini/config` |
+
+The installer writes the skills to `<folder>/skills/` and the scripts to `<folder>/scripts/`. The default folder is `.agents` in the current folder. Run the command again after you pull a new version.
+
+Do not install this copy for Claude Code. Claude Code uses the plugin, and the plugin hook runs the linter for it.
 
 ## Limits
 

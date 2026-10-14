@@ -82,6 +82,24 @@ One section for each use case or feature. The heading names it with its label: "
 
 Write the header cell as plain `AC-n`, without backticks. `doc-lint` finds the label column by that text.
 
+## Backlog (`backlog`)
+
+One table with one row for each story. Sort the rows by priority.
+
+| US-n | Story | Origin | Priority | Estimate | Sprint | Status | AC-n labels |
+|---|---|---|---|---|---|---|---|
+
+- **US-n**: the label.
+- **Story**: "As a <user class>, I want <action>, so that <result>." The user class is a name from the glossary. The story points to its use case and does not repeat the steps.
+- **Origin**: the feature (`FE-n`) or use case (`UC-n`) that the story comes from.
+- **Priority**: the scale of the use cases.
+- **Estimate**: in the unit of the team, or `TBD` with an owner.
+- **Sprint**: the name of the sprint, or `none`.
+- **Status**: `planned`, `in sprint`, or `done`. A story is `done` only when the test of each of its criteria passes.
+- **AC-n labels**: the criteria in the acceptance document. A story with no criterion is not ready for a sprint.
+
+Write the header cells as plain text, without backticks. `doc-lint` finds the label column by the text `US-n`.
+
 ## Data dictionary (`data-dictionary`)
 
 One table, entries in alphabetical order:

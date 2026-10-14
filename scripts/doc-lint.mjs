@@ -46,6 +46,7 @@ const DIAGRAM_TYPES =
 // of any cell defines it.
 const LABEL_COLUMN = {
   acceptance: 'AC-n',
+  backlog: 'US-n',
 };
 
 const LIMITS = {

@@ -37,6 +37,10 @@ jobs:
       - name: Lint the documents
         run: node scripts/doc-lint.mjs README.md examples/courtbook/*.md
 
+      # The tests run doc-lint on small fixture files in tests/fixtures.
+      - name: Test the linter
+        run: node --test tests/doc-lint.test.mjs
+
       - name: Check the syntax of the scripts
         run: |
           for file in scripts/*.mjs evals/*.mjs; do

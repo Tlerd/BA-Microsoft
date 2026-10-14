@@ -5,7 +5,7 @@
 
 A Claude Code plugin for requirements documents, diagrams, and plain technical English.
 
-- **Requirements documents**: vision and scope, use cases, SRS, business rules, data dictionary.
+- **Requirements documents**: vision and scope, use cases, SRS, business rules, acceptance criteria, data dictionary.
 - **Diagrams**: ten models as Mermaid, and three as tables.
 - **Writing style**: 80% of the way to ASD-STE100 Simplified Technical English.
 - **Checks**: a hook runs a linter each time a marked document is saved.
@@ -98,6 +98,7 @@ To accept one line as it is, end that line with `<!-- lint-ok -->`.
 | `REQ-ANDOR` | `and/or` | Files with `ba_doc` |
 | `REQ-VAGUE` | A vague word, for example `fast` or `user-friendly` | Files with `ba_doc` |
 | `REQ-ID` | A label is defined two times | Files with `ba_doc` |
+| `AC-DUP` | An `AC-n` label is defined two times | Files with `ba_doc: acceptance` |
 
 With `lang: vi` the script checks sentence length, paragraph length, semicolons, and a short list of vague Vietnamese words.
 
@@ -109,6 +110,12 @@ node scripts/doc-lint.mjs docs/requirements/srs.md
 
 ```bash
 node scripts/doc-lint.mjs --as ste80 README.md
+```
+
+Test the linter itself. The tests run the script on the fixture files in `tests/fixtures`:
+
+```bash
+node --test tests/doc-lint.test.mjs
 ```
 
 ## Your own templates
@@ -165,7 +172,7 @@ Look at this decision again when a user needs the linter on claude.ai, or needs 
 
 ## Examples
 
-`examples/courtbook/` holds the input (`notes.md`) and the output of three runs with Claude Sonnet: a use case, a glossary, two diagrams, and a review.
+`examples/courtbook/` holds the input (`notes.md`) and the output of runs with Claude Sonnet. The output is a use case, a glossary, two diagrams, a review, and acceptance criteria.
 
 ## Evals
 

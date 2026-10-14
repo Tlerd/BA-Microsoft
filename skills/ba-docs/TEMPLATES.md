@@ -67,6 +67,21 @@ One table:
 
 Type is one of: fact, constraint, action enabler, inference, computation. One rule per row. A rule states policy, not system behaviour: "A Player can hold at most 2 future Bookings", and the SRS says what the system does about it.
 
+## Acceptance criteria (`acceptance`)
+
+One section for each use case or feature. The heading names it with its label: "Book a Court (UC-1)". Under it, one table with one row for each criterion:
+
+| AC-n | Given | When | Then | Origin |
+|---|---|---|---|---|
+
+- **AC-n**: the label. A test takes the label as the start of its name.
+- **Given**: the state before the action, with real values.
+- **When**: one action or event.
+- **Then**: the result that a test can observe, with real values.
+- **Origin**: the flow label (`UC-1`, `UC-1 1.0.E3`), the business rule (`BR-4`), or the requirement tag that the criterion checks.
+
+Write the header cell as plain `AC-n`, without backticks. `doc-lint` finds the label column by that text.
+
 ## Data dictionary (`data-dictionary`)
 
 One table, entries in alphabetical order:

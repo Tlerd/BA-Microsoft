@@ -1,6 +1,8 @@
 <!-- style: ste80 -->
 # ba-kit
 
+[![CI](https://github.com/Tlerd/BA-Microsoft/actions/workflows/ci.yml/badge.svg)](https://github.com/Tlerd/BA-Microsoft/actions/workflows/ci.yml)
+
 A Claude Code plugin for requirements documents, diagrams, and plain technical English.
 
 - **Requirements documents**: vision and scope, use cases, SRS, business rules, data dictionary.

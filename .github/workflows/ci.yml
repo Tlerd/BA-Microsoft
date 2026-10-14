@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      # The npm package installs the same binary as the native installer.
+      # The version is pinned so that a new release cannot break the job.
+      # `claude plugin validate` makes no model call and needs no sign-in.
+      - name: Install Claude Code
+        run: npm install --global @anthropic-ai/claude-code@2.1.296
+
+      # --strict also fails on an unknown hook event, a wrong hook type, a hook
+      # without a command, and a JSON syntax error in hooks/hooks.json.
+      # It does not flag an extra property inside a hook entry.
+      - name: Validate the plugin
+        run: claude plugin validate . --strict
+
+      # doc-lint exits with 1 when it reports a finding.
+      - name: Lint the documents
+        run: node scripts/doc-lint.mjs README.md examples/courtbook/*.md
+
+      - name: Check the syntax of the scripts
+        run: |
+          for file in scripts/*.mjs evals/*.mjs; do
+            node --check "$file"
+          done

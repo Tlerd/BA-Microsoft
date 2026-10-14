@@ -150,17 +150,21 @@ The folder `evals/` holds one case for each skill. The command `claude plugin ev
 | `intake-undecided-feature` | `ba-intake` | 1.00 | 0.67 | +0.33 |
 | `docs-use-case` | `ba-docs` | 1.00 | 0.00 | +1.00 |
 | `diagrams-state` | `ba-diagrams` | 1.00 | 0.75 | +0.25 |
-| `review-planted-defects` | `ba-review` | 1.00 | 1.00 | 0.00 |
-| `ste-rewrite` | `ste` | 1.00 | 1.00 | 0.00 |
+| `review-planted-defects` | `ba-review` | 1.00 | 0.58 | +0.42 |
+| `ste-rewrite` | `ste` | 1.00 | 0.75 | +0.25 |
 
-Run date: 2026-10-14. Claude Code 2.1.296. One run for each case and arm, and a list-price cost of $0.98. One run is noisy, so read a small `Δ` as a hint and not as a measurement.
+Run date: 2026-10-14. Claude Code 2.1.296. The first three rows come from one run for each case and arm, at a list-price cost of $0.98.
+
+In that first round the no-plugin baseline scored 1.00 on `review-planted-defects` and `ste-rewrite`, so the cases were too easy. Both cases got harder input and stricter graders. Their rows come from two runs for each arm. The harder runs cost $1.52 in all, with two earlier runs that I threw away because a grader was wrong. One or two runs are noisy, so read a small `Δ` as a hint and not as a measurement.
+
+The no-plugin arm found all six planted defects in `review-planted-defects`. Its lower score comes from the report form that the skill `ba-review` defines: the table, the counts, and the check for a missing priority.
 
 Each case has a grader that checks if the skill started. That grader is not part of the score. Most graders are regular expressions, so they cost nothing. Only `review-planted-defects` uses a judge model.
 
 To run the suite:
 
 ```bash
-claude plugin eval . --runs 1 --no-publish
+claude plugin eval . --runs 1 --no-publish --judge-model sonnet
 ```
 
 Each run and each judge grader is a paid model call. Run the suite by hand and not on each push. Results go to `evals/results/`, which Git ignores.

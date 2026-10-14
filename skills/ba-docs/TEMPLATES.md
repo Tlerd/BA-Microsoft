@@ -100,6 +100,27 @@ One table with one row for each story. Sort the rows by priority.
 
 Write the header cells as plain text, without backticks. `doc-lint` finds the label column by the text `US-n`.
 
+## Test plan (`test-plan`)
+
+A test plan defines no labels. It only cites them, so it needs the use cases and the `AC-n` labels, not the design or the code. Sections in this order:
+
+1. **Scope**: the features and use cases under test, by `FE-n` and `UC-n`, and what the plan does not test.
+2. **Approach**: the test levels and the test types. Levels are, for example, unit, API, and end to end. Types are, for example, functional and performance.
+3. **Entry and exit criteria**: when testing starts, and when it can stop.
+4. **Environment and test data**: what each level needs. Give real values for each `AC-n`: names, dates, amounts.
+5. **Risks**: what can stop or weaken the testing. Each risk has an owner.
+6. **Coverage**: one table, with one row for each test.
+
+| AC-n | Test name | Level | Status |
+|---|---|---|---|
+
+- **AC-n**: the criterion in the acceptance document that the test checks. A criterion with two tests has two rows.
+- **Test name**: starts with the label, as in `AC-3: a booking that overlaps another is refused`.
+- **Level**: one of the levels in Approach.
+- **Status**: `planned`, `written`, `passing`, or `failing`.
+
+A criterion with no row is a gap in the plan.
+
 ## Data dictionary (`data-dictionary`)
 
 One table, entries in alphabetical order:

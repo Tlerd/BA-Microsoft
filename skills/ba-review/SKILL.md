@@ -29,12 +29,13 @@ A review finds defects and reports them. It changes the document only when the u
    | Unambiguous | Would two readers build the same thing? |
    | Verifiable | Can you name the test that proves it? |
 
-4. **Check the set** for the four qualities of a collection:
+4. **Check the set** for the four qualities of a collection, and for coverage:
 
    - **Complete**: every use case has functional requirements. Every exception flow has a system response. Every entity has a use case that creates it and one that reads it.
    - **Consistent**: no two requirements conflict. One term names one thing. Values agree between documents and with simple arithmetic.
    - **Modifiable**: each requirement is stated once and carries a unique label.
    - **Traceable**: every `BR-n`, `UC-n`, and requirement label that a document cites exists in the set.
+   - **Covered**: when the set holds `acceptance.md`, every `AC-n` has a row in the coverage table of the test plan. An `AC-n` with no row is a defect of type missing.
 
 5. **Apply the project's review checklist** if `AGENTS.md` names one or `docs/requirements/templates/` holds one. Answer every question in it. Report only the questions answered "no".
 

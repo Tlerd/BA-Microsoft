@@ -48,6 +48,8 @@ const LABEL_COLUMN = {
   acceptance: 'AC-n',
   backlog: 'US-n',
 };
+// Document types that only cite labels. They define none, so no cell is a definition.
+const CITE_ONLY = new Set(['test-plan', 'screens']);
 
 const LIMITS = {
   en: { step: 20, prose: 25, paragraph: 6 },
@@ -187,7 +189,7 @@ function lint(text, forced) {
 
     // A label at the start of a line or table cell defines that item.
     let labelled = false;
-    if (req)
+    if (req && !CITE_ONLY.has(docType))
       cells.forEach((c, col) => {
         if (labelCol >= 0 && col !== labelCol) return;
         const id = /^((?:[A-Z]{2,5}-\d+(?:\.\d+)*)|(?:[A-Z][A-Za-z]+(?:\.[A-Z][A-Za-z0-9]+)+))\s*[:.]?(\s|$)/.exec(c);

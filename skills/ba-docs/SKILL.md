@@ -1,6 +1,6 @@
 ---
 name: ba-docs
-description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, acceptance criteria, a backlog of user stories, a data dictionary, a glossary, or a risk list.
+description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, acceptance criteria, a backlog of user stories, a test plan, a data dictionary, a glossary, or a risk list.
 ---
 
 The method follows mainstream requirements engineering practice (Wiegers and Beatty, *Software Requirements*, 3rd edition): business requirements first, then user requirements, then functional requirements, each traced to the one before.
@@ -20,7 +20,7 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
 
 1. **Read the format authority** for the document type.
 
-2. **Collect the facts.** Read the requirements folder first: each document builds on the one before it (vision and scope → use cases and business rules → SRS → data dictionary → acceptance criteria → backlog). List every section that the sources cannot fill. Ask the user for those facts in one message. A fact that nobody has yet is written as `TBD` with the name of the person who can decide it.
+2. **Collect the facts.** Read the requirements folder first: each document builds on the one before it (vision and scope → use cases and business rules → SRS → data dictionary → acceptance criteria → backlog → test plan). List every section that the sources cannot fill. Ask the user for those facts in one message. A fact that nobody has yet is written as `TBD` with the name of the person who can decide it.
 
 3. **Write the file** in the project's requirements folder (default `docs/requirements/`) with this front matter:
 
@@ -33,7 +33,7 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
    ---
    ```
 
-   `ba_doc` is one of `vision-scope`, `use-cases`, `srs`, `business-rules`, `acceptance`, `backlog`, `data-dictionary`, `glossary`, `risks`, `models`. Documents are in English unless the user asks for another language. Load the `ste` skill before you write.
+   `ba_doc` is one of `vision-scope`, `use-cases`, `srs`, `business-rules`, `acceptance`, `backlog`, `test-plan`, `data-dictionary`, `glossary`, `risks`, `models`. Documents are in English unless the user asks for another language. Load the `ste` skill before you write.
 
 4. **Label every item** so that other documents can point at it. A label is never reused.
 
@@ -60,6 +60,8 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
 
    Write each user story as `As a <user class>, I want <action>, so that <result>.` Use the user class name from the glossary. A story is the unit of planning. It names its use case or feature in the Origin column and does not repeat the steps of the use case. Its status is `planned`, `in sprint`, or `done`. A story is `done` only when the test of each of its `AC-n` labels passes.
 
+   Write the test plan from the use cases and the `AC-n` labels. It defines no labels and only cites them. Give each `AC-n` one row in the coverage table, or two rows when it needs two tests. Start each test name with its label.
+
 6. **Keep one name for one thing.** Before a new domain term goes into a document, add it to `glossary.md` in the requirements folder (table: Term | Definition | Synonyms to avoid). Use the glossary term everywhere.
 
 7. **Add the models.** A context diagram belongs in vision and scope. A state or process model belongs where prose would need a paragraph of conditions. Build them with the `ba-diagrams` skill.
@@ -70,5 +72,6 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
    - Every functional requirement traces to a use case or business rule that exists, and every use case has requirements in the SRS once the SRS exists.
    - Every `AC-n` has an origin that exists. The test for it has a name that starts with the label, for example `AC-3: a booking that overlaps another is refused`.
    - Every `US-n` has an origin that exists, and every use case has at least one story.
+   - Every `AC-n` in `acceptance.md` has a row in the coverage table of the test plan.
    - `doc-lint` reports 0 findings. The plugin hook runs it on each save and returns the findings. Fix them in the file.
    - Your closing message lists the open `TBD` items and the facts you assumed.

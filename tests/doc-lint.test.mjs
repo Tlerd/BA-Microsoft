@@ -50,7 +50,7 @@ test('business rules: a repeated BR-n still gives REQ-ID', () => {
 });
 
 test('example set: courtbook documents give 0 findings', () => {
-  for (const f of ['use-cases', 'business-rules', 'glossary', 'models', 'acceptance']) {
+  for (const f of ['use-cases', 'business-rules', 'glossary', 'models', 'acceptance', 'test-plan']) {
     const r = lint(`examples/courtbook/${f}.md`);
     assert.deepEqual(r.findings, [], `${f}.md`);
   }
@@ -113,4 +113,39 @@ test('example set: every use case has a story, and every cited label exists', ()
     assert.match(c[2], /^As an? [A-Z][\w ]+, I want .+, so that .+\.$/, c[1]);
     assert.doesNotMatch(c[2], /\bstep\b/i, `${c[1]} repeats use case steps`);
   }
+});
+
+test('test plan: an AC-n with two tests gives 0 findings', () => {
+  const r = lint('tests/fixtures/test-plan-ok.md');
+  assert.deepEqual(r.findings, []);
+  assert.equal(r.status, 0);
+});
+
+test('example set: test-plan.md gives 0 findings', () => {
+  const r = lint('examples/courtbook/test-plan.md');
+  assert.deepEqual(r.findings, []);
+  assert.equal(r.status, 0);
+});
+
+test('example set: every AC-n has a coverage row, and a test name starts with its label', () => {
+  const dir = join(root, 'examples', 'courtbook');
+  const read = (f) => readFileSync(join(dir, f), 'utf8');
+  const criteria = [...read('acceptance.md').matchAll(/^\| (AC-\d+) /gm)].map((m) => m[1]);
+  assert.ok(criteria.length >= 1);
+  const plan = read('test-plan.md');
+  const rows = plan
+    .split(/\r?\n/)
+    .filter((l) => /^\| AC-\d+ \|/.test(l))
+    .map((l) => l.split('|').map((c) => c.trim()));
+  // Cells: 0 is empty, 1 AC-n, 2 test name, 3 level, 4 status.
+  for (const c of rows) {
+    assert.ok(c[2].startsWith(`${c[1]}: `), `${c[2]} does not start with ${c[1]}`);
+    assert.match(c[4], /^(planned|written|passing|failing)$/, c[2]);
+  }
+  for (const ac of criteria) assert.ok(rows.some((c) => c[1] === ac), `${ac} has no coverage row`);
+  // The example shows a criterion with two tests.
+  assert.ok(criteria.some((ac) => rows.filter((c) => c[1] === ac).length === 2));
+  // Every label that the plan cites exists in the set.
+  const known = ['use-cases.md', 'business-rules.md', 'acceptance.md'].map(read).join('\n');
+  for (const label of new Set(plan.match(/\b(UC|BR|AC)-\d+\b/g))) assert.ok(known.includes(label), `${label} is not defined`);
 });

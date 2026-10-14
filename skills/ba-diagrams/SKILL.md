@@ -40,7 +40,7 @@ Notation and a working snippet for each model are in [`NOTATION.md`](NOTATION.md
 1. Name the question the diagram answers and choose the model from the table.
 2. List the elements from the source documents or the code, each with its label. An element with no source is a question for the user.
 3. Write the diagram from the snippet in `NOTATION.md`.
-4. Cross-check it against a second model: every data store in a DFD is an entity in the ERD. Every state change is caused by some use case. Every actor in the context diagram appears in a use case.
+4. Cross-check it against a second model: every data store in a DFD is an entity in the ERD. Every state change is caused by some use case. Every actor in the context diagram appears in a use case. Every screen in a dialog map has a table in `screens.md`, and every table there names a screen in the map.
 5. Render it:
 
    ```

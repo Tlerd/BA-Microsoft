@@ -5,7 +5,7 @@
 
 A Claude Code plugin for requirements documents, diagrams, and plain technical English.
 
-- **Requirements documents**: vision and scope, use cases, SRS, business rules, acceptance criteria, backlog of user stories, test plan, data dictionary.
+- **Requirements documents**: vision and scope, use cases, SRS, business rules, acceptance criteria, backlog, test plan, screens, data dictionary, reading map.
 - **Diagrams**: ten models as Mermaid, and three as tables.
 - **Writing style**: 80% of the way to ASD-STE100 Simplified Technical English.
 - **Checks**: a hook runs a linter each time a marked document is saved.
@@ -97,7 +97,7 @@ To accept one line as it is, end that line with `<!-- lint-ok -->`.
 | `REQ-SPLIT` | A requirement contains `unless`, `except`, `but` | Files with `ba_doc` |
 | `REQ-ANDOR` | `and/or` | Files with `ba_doc` |
 | `REQ-VAGUE` | A vague word, for example `fast` or `user-friendly` | Files with `ba_doc` |
-| `REQ-ID` | A label is defined two times. In `acceptance` and `backlog` tables, only the `AC-n` or `US-n` column defines a label. A `test-plan` defines none | Files with `ba_doc` |
+| `REQ-ID` | A label is defined two times. In `acceptance` and `backlog` tables, only the `AC-n` or `US-n` column defines a label. A `test-plan` and a `screens` document define none | Files with `ba_doc` |
 | `AC-DUP` | An `AC-n` label is defined two times | Files with `ba_doc: acceptance` |
 
 With `lang: vi` the script checks sentence length, paragraph length, semicolons, and a short list of vague Vietnamese words.
@@ -172,7 +172,7 @@ Look at this decision again when a user needs the linter on claude.ai, or needs 
 
 ## Examples
 
-`examples/courtbook/` holds the input (`notes.md`) and the output of runs with Claude Sonnet. The output is a use case, a glossary, two diagrams, a review, acceptance criteria, a backlog, and a test plan.
+`examples/courtbook/` holds the input (`notes.md`) and the output of runs with Claude Sonnet. The output is a use case, a glossary, three diagrams, and a review. It also holds acceptance criteria, a backlog, a test plan, screen specifications, and a reading map.
 
 ## Evals
 

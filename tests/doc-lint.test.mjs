@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const script = join(root, 'scripts', 'doc-lint.mjs');
@@ -148,4 +148,64 @@ test('example set: every AC-n has a coverage row, and a test name starts with it
   // Every label that the plan cites exists in the set.
   const known = ['use-cases.md', 'business-rules.md', 'acceptance.md'].map(read).join('\n');
   for (const label of new Set(plan.match(/\b(UC|BR|AC)-\d+\b/g))) assert.ok(known.includes(label), `${label} is not defined`);
+});
+
+test('screens: tables that cite the same label give 0 findings', () => {
+  const r = lint('tests/fixtures/screens-ok.md');
+  assert.deepEqual(r.findings, []);
+  assert.equal(r.status, 0);
+});
+
+test('example set: screens.md and README.md give 0 findings', () => {
+  for (const f of ['screens', 'README']) {
+    const r = lint(`examples/courtbook/${f}.md`);
+    assert.deepEqual(r.findings, [], `${f}.md`);
+    assert.equal(r.status, 0);
+  }
+});
+
+test('example set: screens.md has one table for each screen of the dialog map', () => {
+  const dir = join(root, 'examples', 'courtbook');
+  const read = (f) => readFileSync(join(dir, f), 'utf8');
+  const map = read('models.md')
+    .match(/```mermaid\r?\nstateDiagram-v2[\s\S]*?```/g)
+    .find((b) => /state "/.test(b));
+  assert.ok(map, 'models.md has no dialog map');
+  const screens = [...map.matchAll(/state "([^"]+)" as \w+/g)].map((m) => m[1]).sort();
+  assert.ok(screens.length >= 2);
+  const doc = read('screens.md');
+  // The revision history table also has a Name header, so match two-cell rows only.
+  const named = [...doc.matchAll(/^\| Name \| ([^|]+?) \|\r?$/gm)].map((m) => m[1]).sort();
+  assert.deepEqual(named, screens);
+  // A section heading carries the same name, and each section holds the six rows.
+  for (const name of screens) {
+    const section = doc.split(/^## /m).find((s) => s.startsWith(`${name}\n`) || s.startsWith(`${name}\r\n`));
+    assert.ok(section, `no section for ${name}`);
+    for (const row of ['Name', 'Purpose', 'Fields', 'Actions', 'Messages', 'Labels'])
+      assert.match(section, new RegExp(`^\| ${row} \|`, 'm'), `${name} has no ${row} row`);
+  }
+});
+
+test('example set: each label that screens.md cites exists in the set', () => {
+  const dir = join(root, 'examples', 'courtbook');
+  const read = (f) => readFileSync(join(dir, f), 'utf8');
+  const doc = read('screens.md');
+  const known = ['use-cases.md', 'business-rules.md', 'acceptance.md', 'screens.md'].map(read).join('\n');
+  const cited = new Set(doc.match(/\b(UC|BR|PRE|POST|UI|TBD)-\d+\b/g));
+  assert.ok(cited.size >= 1);
+  for (const label of cited) assert.ok(known.includes(label), `${label} is not defined`);
+  const uc = read('use-cases.md');
+  const flows = new Set(doc.match(/\b\d+\.\d+(\.E\d+)?\b/g));
+  assert.ok(flows.size >= 1);
+  for (const flow of flows) assert.ok(uc.includes(flow), `flow ${flow} is not in use-cases.md`);
+});
+
+test('example set: README.md names only files that exist', () => {
+  const dir = join(root, 'examples', 'courtbook');
+  const text = readFileSync(join(dir, 'README.md'), 'utf8');
+  const roles = text.split(/\r?\n/).filter((l) => /^\| (Developer|Designer|Tester) \|/.test(l));
+  assert.equal(roles.length, 3);
+  for (const row of roles) assert.ok(/\]\([\w-]+\.md\)/.test(row), `no document in "${row.slice(0, 12)}"`);
+  const mentioned = new Set(text.match(/[\w-]+\.md/g));
+  for (const f of mentioned) if (f !== 'README.md') assert.ok(existsSync(join(dir, f)), `${f} does not exist`);
 });

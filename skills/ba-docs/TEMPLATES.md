@@ -121,6 +121,34 @@ A test plan defines no labels. It only cites them, so it needs the use cases and
 
 A criterion with no row is a gap in the plan.
 
+## Screens (`screens`)
+
+One section for each screen of the dialog map. The heading is the name of the screen in the map. Each section holds one table. The table says what the screen must hold, not how it looks. The visual design stays with the designer.
+
+| Row | Content |
+|---|---|
+| Name | the name that the dialog map uses |
+| Purpose | one sentence: what the user does here |
+| Fields | each field with its type and its validation rule |
+| Actions | each action with its result: the next screen, or the change in data |
+| Messages | each message, and the event that shows it |
+| Labels | the `UC-n` flows and the `UI-n` items that the screen serves |
+
+A field with a limit cites the business rule: `Duration: 1 or 2 hours (BR-2)`. Cite only labels that exist in the set. A screen specification defines no labels. It only cites them, as a test plan does.
+
+## Reading map (`README.md`)
+
+The file `README.md` in the requirements folder tells each role what to read. It is not a `ba_doc` type. Start it with the comment `<!-- style: ste80 -->`. It holds one table:
+
+| Role | Read in this order |
+|---|---|
+| Developer | SRS, data dictionary, `acceptance.md`, glossary |
+| Designer | use cases, `screens.md`, dialog map, glossary |
+| Tester | use cases, business rules, `acceptance.md`, `test-plan.md` |
+
+- Name only documents that exist in the folder. Give each as a link. A dialog map lives in `models.md`, so link that file.
+- Add a row for a new role when the project has one. Add a document to a row when a new document helps that role.
+
 ## Data dictionary (`data-dictionary`)
 
 One table, entries in alphabetical order:

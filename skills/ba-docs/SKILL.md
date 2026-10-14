@@ -1,6 +1,6 @@
 ---
 name: ba-docs
-description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, acceptance criteria, a backlog of user stories, a test plan, a data dictionary, a glossary, or a risk list.
+description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, acceptance criteria, a backlog of user stories, a test plan, screen specifications, a data dictionary, a glossary, or a risk list.
 ---
 
 The method follows mainstream requirements engineering practice (Wiegers and Beatty, *Software Requirements*, 3rd edition): business requirements first, then user requirements, then functional requirements, each traced to the one before.
@@ -33,7 +33,7 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
    ---
    ```
 
-   `ba_doc` is one of `vision-scope`, `use-cases`, `srs`, `business-rules`, `acceptance`, `backlog`, `test-plan`, `data-dictionary`, `glossary`, `risks`, `models`. Documents are in English unless the user asks for another language. Load the `ste` skill before you write.
+   `ba_doc` is one of `vision-scope`, `use-cases`, `srs`, `business-rules`, `acceptance`, `backlog`, `test-plan`, `screens`, `data-dictionary`, `glossary`, `risks`, `models`. Documents are in English unless the user asks for another language. Load the `ste` skill before you write.
 
 4. **Label every item** so that other documents can point at it. A label is never reused.
 
@@ -62,9 +62,11 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
 
    Write the test plan from the use cases and the `AC-n` labels. It defines no labels and only cites them. Give each `AC-n` one row in the coverage table, or two rows when it needs two tests. Start each test name with its label.
 
+   Write the screen specification from the dialog map and the use cases. Make one table for each screen of the map, under the name that the map uses. Cite only labels that exist. It defines no labels.
+
 6. **Keep one name for one thing.** Before a new domain term goes into a document, add it to `glossary.md` in the requirements folder (table: Term | Definition | Synonyms to avoid). Use the glossary term everywhere.
 
-7. **Add the models.** A context diagram belongs in vision and scope. A state or process model belongs where prose would need a paragraph of conditions. Build them with the `ba-diagrams` skill.
+7. **Add the models.** A context diagram belongs in vision and scope. A state or process model belongs where prose would need a paragraph of conditions. A dialog map belongs in `models.md`, before the screen specification. Build them with the `ba-diagrams` skill.
 
 8. **Finish.** The document is done when all of these are true:
 
@@ -73,5 +75,6 @@ node "<this skill's folder>/../../scripts/doc-text.mjs" "<file.md>"
    - Every `AC-n` has an origin that exists. The test for it has a name that starts with the label, for example `AC-3: a booking that overlaps another is refused`.
    - Every `US-n` has an origin that exists, and every use case has at least one story.
    - Every `AC-n` in `acceptance.md` has a row in the coverage table of the test plan.
+   - `README.md` in the requirements folder is up to date: one table with a row for each role, and only documents that exist. Update it each time you write or change a document.
    - `doc-lint` reports 0 findings. The plugin hook runs it on each save and returns the findings. Fix them in the file.
    - Your closing message lists the open `TBD` items and the facts you assumed.

@@ -86,8 +86,9 @@ function countWords(s) {
 function splitSentences(s) {
   // Keep decimals, version numbers and one-letter list markers together.
   // A colon that ends the text closes a sentence too (STE rule 8.4).
+  // \b sees only ASCII letters, so "tắc." would look like a one-letter abbreviation.
   return s
-    .split(/(?<=[.!?])(?<!\b[A-Za-z]\.)(?<!\d\.(?=\d))\s+(?=["“(\p{Lu}\p{N}])|:\s*$/u)
+    .split(/(?<=[.!?])(?<!(?<![\p{L}\p{M}\p{N}])[A-Za-z]\.)(?<!\d\.(?=\d))\s+(?=["“(\p{Lu}\p{N}])|:\s*$/u)
     .map((x) => x.trim())
     .filter((x) => countWords(x) > 0);
 }

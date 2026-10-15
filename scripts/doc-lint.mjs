@@ -41,6 +41,16 @@ const WEAK_MODALS = ['should', 'might', 'could', 'ought to', 'needs to', 'need t
 const DIAGRAM_TYPES =
   /^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(-v2)?|erDiagram|journey|gantt|pie|mindmap|timeline|quadrantChart|requirementDiagram|C4Context|C4Container|block-beta|architecture-beta)\b/;
 
+// Document types whose tables cite labels in other columns. Only the column with
+// this header defines a label there. Other document types: a label at the start
+// of any cell defines it.
+const LABEL_COLUMN = {
+  acceptance: 'AC-n',
+  backlog: 'US-n',
+};
+// Document types that only cite labels. They define none, so no cell is a definition.
+const CITE_ONLY = new Set(['test-plan', 'screens']);
+
 const LIMITS = {
   en: { step: 20, prose: 25, paragraph: 6 },
   // Vietnamese words are counted by syllable, so the same idea takes more tokens.
@@ -92,6 +102,8 @@ const stripInline = (s) =>
 
 // forced: null (use the front matter), 'ste80', or 'req'.
 function lint(text, forced) {
+  // Some Windows editors and shells start a UTF-8 file with a byte order mark.
+  text = text.replace(/^﻿/, '');
   const { meta, bodyStart } = parseFrontMatter(text);
   const style = (meta.style || '').toLowerCase();
   const marked = meta.ba_doc || style;
@@ -113,6 +125,7 @@ function lint(text, forced) {
   let codeLang = '';
   let codeStart = 0;
   let codeFirst = '';
+  let tableHeader = null;
   let para = { sentences: 0, line: 0 };
   const closePara = () => {
     if (para.sentences > limits.paragraph)
@@ -148,11 +161,13 @@ function lint(text, forced) {
       continue;
     }
     if (/<!--\s*lint-ok\s*-->/.test(raw)) continue;
-    if (/^\s*$/.test(raw)) {
+    if (/^\s*$/.test(raw) || /^\s*#{1,6}\s/.test(raw)) {
       closePara();
+      tableHeader = null;
       continue;
     }
-    if (/^\s*#{1,6}\s/.test(raw) || /^\s*\|?\s*:?-{3,}/.test(raw)) {
+    // The line under a table header is not a row.
+    if (/^\s*\|?\s*:?-{3,}/.test(raw)) {
       closePara();
       continue;
     }
@@ -165,16 +180,26 @@ function lint(text, forced) {
       stripInline(c).replace(/^\s*(\d+[.)]|[-*+]|>)\s+/, '').trim(),
     );
 
+    // The first row of a table is its header. A table ends at any other line.
+    if (!isTable) tableHeader = null;
+    else if (!tableHeader) tableHeader = cells;
+    // In some outlines one column holds the labels, and the other columns only cite them.
+    const labelHeader = LABEL_COLUMN[docType];
+    const labelCol = isTable && labelHeader && tableHeader ? tableHeader.indexOf(labelHeader) : -1;
+
     // A label at the start of a line or table cell defines that item.
     let labelled = false;
-    if (req)
-      for (const c of cells) {
+    if (req && !CITE_ONLY.has(docType))
+      cells.forEach((c, col) => {
+        if (labelCol >= 0 && col !== labelCol) return;
         const id = /^((?:[A-Z]{2,5}-\d+(?:\.\d+)*)|(?:[A-Z][A-Za-z]+(?:\.[A-Z][A-Za-z0-9]+)+))\s*[:.]?(\s|$)/.exec(c);
-        if (!id) continue;
+        if (!id) return;
         labelled = true;
-        if (ids.has(id[1])) add(n, 'REQ-ID', `Label ${id[1]} is already defined on line ${ids.get(id[1])}.`);
-        else ids.set(id[1], n);
-      }
+        if (!ids.has(id[1])) ids.set(id[1], n);
+        else if (docType === 'acceptance' && /^AC-\d+$/.test(id[1]))
+          add(n, 'AC-DUP', `Criterion ${id[1]} is already defined on line ${ids.get(id[1])}. A test name must point to one criterion.`);
+        else add(n, 'REQ-ID', `Label ${id[1]} is already defined on line ${ids.get(id[1])}.`);
+      });
 
     for (const cell of cells) {
       if (!cell) continue;

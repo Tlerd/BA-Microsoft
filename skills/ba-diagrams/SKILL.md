@@ -1,6 +1,7 @@
 ---
 name: ba-diagrams
 description: Diagrams and models as Mermaid in Markdown. Use when the user asks for a diagram, or when a requirement, design, or explanation needs a context diagram, use case diagram, swimlane, state diagram, ERD, data flow diagram, dialog map, sequence diagram, decision table, or feature tree.
+effort: medium
 ---
 
 A model shows what prose hides: a missing flow, a state with no exit, an entity nobody creates. Draw the risky and the complex parts. A full set of models for the whole system is seldom needed.
@@ -40,7 +41,7 @@ Notation and a working snippet for each model are in [`NOTATION.md`](NOTATION.md
 1. Name the question the diagram answers and choose the model from the table.
 2. List the elements from the source documents or the code, each with its label. An element with no source is a question for the user.
 3. Write the diagram from the snippet in `NOTATION.md`.
-4. Cross-check it against a second model: every data store in a DFD is an entity in the ERD. Every state change is caused by some use case. Every actor in the context diagram appears in a use case.
+4. Cross-check it against a second model: every data store in a DFD is an entity in the ERD. Every state change is caused by some use case. Every actor in the context diagram appears in a use case. Every screen in a dialog map has a table in `screens.md`, and every table there names a screen in the map.
 5. Render it:
 
    ```

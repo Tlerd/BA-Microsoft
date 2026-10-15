@@ -9,15 +9,16 @@ lang: en
 | Item | Value |
 |---|---|
 | Product | CourtBook |
-| Version | 0.1 |
+| Version | 0.2 |
 | Author | BA Team |
-| Date | 2026-10-13 |
+| Date | 2026-10-14 |
 
 ## Revision History
 
 | Name | Date | Reason for changes | Version |
 |---|---|---|---|
 | BA Team | 2026-10-13 | First draft: context diagram and Booking states | 0.1 |
+| BA Team | 2026-10-14 | Added the dialog map for UC-1 | 0.2 |
 
 ## Context Diagram
 
@@ -67,6 +68,25 @@ Key: box = state. Arrow = allowed change, labelled with its cause. Pending payme
 | Confirmed | Booked | The Booking has a Booking code (UC-1 POST-1). |
 | Cancelled | Released | The Player cancelled the Booking. |
 | Expired | Released | The Player did not pay in time. |
+
+## Dialog Map
+
+Figure 3 shows the screens of UC-1 and the navigation between them. The source is UC-1. The file `screens.md` says what each screen holds.
+
+```mermaid
+stateDiagram-v2
+    state "Court Availability" as CourtAvailability
+    state "Payment" as Payment
+    state "Booking Confirmed" as BookingConfirmed
+    [*] --> CourtAvailability : Player selects Book a court
+    CourtAvailability --> Payment : Player confirms the chosen Slots
+    Payment --> CourtAvailability : Player cancels, or the Booking expires
+    Payment --> BookingConfirmed : payment arrives
+    BookingConfirmed --> [*] : Player closes the screen
+```
+
+Figure 3. Dialog map for UC-1 Book a Court
+Key: box = screen. Arrow = navigation, labelled with its trigger. Dot = start and end of the use case.
 
 ## Open Questions
 

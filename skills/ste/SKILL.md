@@ -1,6 +1,7 @@
 ---
 name: ste
 description: Plain technical English, 80% of the way to ASD-STE100. Use when writing or rewriting an English document for people to read (README, guide, report, specification, requirements), or when the user asks for STE or "simplified technical English".
+effort: low
 ---
 
 ASD-STE100 Simplified Technical English is a controlled language from aerospace maintenance manuals. This skill applies the part that makes any technical text easier to read: its sentence and structure rules. Word choice is by judgement, so the full dictionary of the standard is not needed. That level is "80% of the way to ASD-STE100".

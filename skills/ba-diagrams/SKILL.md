@@ -1,6 +1,7 @@
 ---
 name: ba-diagrams
 description: Diagrams and models as Mermaid in Markdown. Use when the user asks for a diagram, or when a requirement, design, or explanation needs a context diagram, use case diagram, swimlane, state diagram, ERD, data flow diagram, dialog map, sequence diagram, decision table, or feature tree.
+effort: medium
 ---
 
 A model shows what prose hides: a missing flow, a state with no exit, an entity nobody creates. Draw the risky and the complex parts. A full set of models for the whole system is seldom needed.

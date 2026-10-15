@@ -195,6 +195,23 @@ The no-plugin arm found all six planted defects in `review-planted-defects`. Its
 
 The case `diagrams-state` has a regular expression for common syntax slips. A regular expression cannot parse Mermaid, so [Decisions](#mermaid-parse-check) describes a real parse with `evals/parse-mermaid.mjs`.
 
+### Effort for each skill
+
+The skill frontmatter can set `effort`. For each candidate setting, the plugin-only arm ran the eval case two times with the setting and two times without it. Cost is the list price for one run, with the judge. Time is the mean for one run.
+
+| Skill | Setting | Score | Cost | Time | Applied |
+|---|---|---|---|---|---|
+| `ste` | none | 1.00 | $0.094 | 20 s | |
+| `ste` | `effort: low` | 1.00 | $0.078 | 9 s | Yes |
+| `ba-diagrams` | none | 1.00 | $0.105 | 19 s | |
+| `ba-diagrams` | `effort: medium` | 1.00 | $0.113 | 18 s | Yes |
+| `ba-review` | `effort: high` in the agent | 1.00 | $0.363 | 114 s | Yes |
+| `ba-intake`, `ba-docs` | none | | | | No setting |
+
+The setting `effort: low` for `ste` kept the score. It cut the cost by 17% and the time by half. The setting for `ba-diagrams` kept the score and gave no saving. The reviewer agent of `ba-review` has `effort: high`. The table has no row without it, because the case ran only with the agent. A setting on the skill itself was not tested.
+
+Two runs for each row are a small sample, so the cost and time differences can be noise.
+
 Each case has a grader that checks if the skill started. That grader is not part of the score. Most graders are regular expressions, so they cost nothing. Only `review-planted-defects` uses a judge model.
 
 To run the suite:

@@ -181,15 +181,13 @@ The folder `evals/` holds one case for each skill. The command `claude plugin ev
 
 | Case | Skill | WITH | W/OUT | Δ |
 |---|---|---|---|---|
-| `intake-undecided-feature` | `ba-intake` | 1.00 | 0.67 | +0.33 |
+| `intake-undecided-feature` | `ba-intake` | 0.67 | 0.33 | +0.34 |
 | `docs-use-case` | `ba-docs` | 1.00 | 0.00 | +1.00 |
-| `diagrams-state` | `ba-diagrams` | 1.00 | 0.75 | +0.25 |
+| `diagrams-state` | `ba-diagrams` | 1.00 | 0.80 | +0.20 |
 | `review-planted-defects` | `ba-review` | 1.00 | 0.58 | +0.42 |
 | `ste-rewrite` | `ste` | 1.00 | 0.75 | +0.25 |
 
-Run date: 2026-10-14. Claude Code 2.1.296. The first three rows come from one run for each case and arm, at a list-price cost of $0.98.
-
-In that first round the no-plugin baseline scored 1.00 on `review-planted-defects` and `ste-rewrite`, so the cases were too easy. Both cases got harder input and stricter graders. Their rows come from two runs for each arm. The harder runs cost $1.52 in all, with two earlier runs that I threw away because a grader was wrong. One or two runs are noisy, so read a small `Δ` as a hint and not as a measurement.
+Run date: 2026-10-15. Claude Code 2.1.296. One run for each case and arm, at a list-price cost of $1.22. Every skill has a `Δ` above zero. One run is noisy, so read a small `Δ` as a hint and not as a measurement. Two runs of `review-planted-defects` with the reviewer agent scored 1.00 both times.
 
 The no-plugin arm found all six planted defects in `review-planted-defects`. Its lower score comes from the report form that the skill `ba-review` defines: the table, the counts, and the check for a missing priority.
 

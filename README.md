@@ -20,7 +20,8 @@ The plugin has no paths that point to one machine. It works in any project.
 | Skill `ba-intake` | `skills/ba-intake/SKILL.md` | Interviews you about an outcome, writes a questionnaire for others, lists open items, and writes an intake brief |
 | Skill `ba-docs` | `skills/ba-docs/` | Writes requirements documents from outlines or from your templates |
 | Skill `ba-diagrams` | `skills/ba-diagrams/` | Chooses the model and writes it in Mermaid |
-| Skill `ba-review` | `skills/ba-review/SKILL.md` | Finds defects in a requirements document and reports them |
+| Skill `ba-review` | `skills/ba-review/SKILL.md` | Finds defects in a requirements document and reports them. It runs in the `requirements-reviewer` agent, in a fresh context |
+| Agent `requirements-reviewer` | `agents/requirements-reviewer.md` | A reviewer with read-only tools (`Read`, `Glob`, `Grep`). It has not seen the chat, so it does not defend the document |
 | Hook | `hooks/hooks.json` | Runs `doc-lint` after each `Write` or `Edit` of a marked file |
 | `doc-lint` | `scripts/doc-lint.mjs` | Checks the countable rules. No model call, no network |
 | `diagram-preview` | `scripts/diagram-preview.mjs` | Writes `<file>.diagrams.html` to show each Mermaid block, in the light or dark theme of the browser |
@@ -140,7 +141,7 @@ Do not install this copy for Claude Code. Claude Code uses the plugin, and the p
 
 ## Limits
 
-- The linter counts words, sentences, and punctuation. It does not see tenses or meaning. A document with 0 findings can still contain wrong requirements. The skill `ba-review` finds those.
+- The linter counts words, sentences, and punctuation. It does not see tenses or meaning. A document with 0 findings can still contain wrong requirements. The skill `ba-review` finds those. The reviewer agent has no shell, so `ba-review` does not run the linter. The hook still lints each marked document on save.
 - The limits for Vietnamese (28 and 35 syllables) are a choice of this tool. ASD-STE100 gives no figures for Vietnamese.
 - The preview page loads Mermaid from `cdn.jsdelivr.net`, so the browser needs a connection.
 - An animated arrow needs Mermaid 11.5.0 or later. The preview page has it. An older Markdown viewer shows a parse error in place of that diagram.

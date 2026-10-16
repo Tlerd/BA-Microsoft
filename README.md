@@ -1,9 +1,12 @@
 <!-- style: ste80 -->
 # ba-kit
 
-A Claude Code plugin for requirements documents, diagrams, and plain technical English.
+A Claude Code plugin for requirements documents, feature briefs for coding agents, tech-lead reviews, diagrams, and plain technical English.
 
 - **Requirements documents**: vision and scope, use cases, SRS, business rules, data dictionary.
+- **Feature briefs**: goals, non-goals, and acceptance criteria for one slice from the database to the screen.
+- **Tech lead**: architecture decision records, pattern review, backend review, and rules that make a codebase easy for agents.
+- **Handbooks**: one offline HTML page with tabs, built from a checked data file.
 - **Diagrams**: ten models as Mermaid, and three as tables.
 - **Writing style**: 80% of the way to ASD-STE100 Simplified Technical English.
 - **Checks**: a hook runs a linter each time a marked document is saved.
@@ -19,10 +22,15 @@ The plugin has no paths that point to one machine. It works in any project.
 | Skill `ba-docs` | `skills/ba-docs/` | Writes requirements documents from outlines or from your templates |
 | Skill `ba-diagrams` | `skills/ba-diagrams/` | Chooses the model and writes it in Mermaid |
 | Skill `ba-review` | `skills/ba-review/SKILL.md` | Finds defects in a requirements document and reports them |
+| Skill `feature-brief` | `skills/feature-brief/` | Writes the goal, non-goals, acceptance criteria, contract, and build order of one feature slice |
+| Skill `tech-lead` | `skills/tech-lead/` | Writes ADRs, reviews patterns and backend changes, and checks the agent-ready rules |
+| Skill `ba-handbook` | `skills/ba-handbook/SKILL.md` | Turns checked content into an interactive offline HTML page |
 | Hook | `hooks/hooks.json` | Runs `doc-lint` after each `Write` or `Edit` of a marked file |
 | `doc-lint` | `scripts/doc-lint.mjs` | Checks the countable rules. No model call, no network |
 | `diagram-preview` | `scripts/diagram-preview.mjs` | Writes `<file>.diagrams.html` to show each Mermaid block, in the light or dark theme of the browser |
 | `doc-text` | `scripts/doc-text.mjs` | Prints a Markdown file without inline base64 images |
+| `handbook-build` | `scripts/handbook-build.mjs` | Checks a `<name>.handbook.json` file and writes `<name>.html`. Each item must cite a source or be marked as a proposal |
+| `install-agents` | `scripts/install-agents.mjs` | Installs the skills for Codex, Antigravity, and other agents. See [Other agents](#other-agents) |
 
 Claude starts each skill by itself when the task matches. You do not type a command.
 
@@ -58,6 +66,9 @@ Give the task in normal words:
 - "Draw the ERD and the state diagram of a Booking."
 - "Review `docs/requirements/srs.md`."
 - "Rewrite this README in STE."
+- "Write the brief for the next feature: create a match with a court booking."
+- "Review this endpoint as the tech lead."
+- "Make an interactive handbook from `docs/process.md`."
 
 ## Mark a document
 
@@ -114,14 +125,19 @@ The skill `ba-docs` uses the outlines in `skills/ba-docs/TEMPLATES.md`. To use y
 
 ## Other agents
 
-Codex and other agents do not load Claude Code plugins. They can read the skill files and run the scripts. Add these lines to the `AGENTS.md` file of the project, with the path of your clone:
+The skills follow the [Agent Skills](https://agentskills.io) format, so other agents can load them too. Those agents do not run the plugin hook. The installer gives them a copy of the skills that tells the agent to run `doc-lint` after each save. The Claude Code plugin does not change.
 
-```markdown
-## Requirements documents
+Clone the repository, then run the installer from the folder that must get the skills:
 
-- Requirements documents are in `docs/requirements/`. Before you write one, read `<clone>/skills/ba-docs/SKILL.md` and follow it.
-- After each change to a document, run `node <clone>/scripts/doc-lint.mjs <file>` and fix each finding.
-```
+| Agent | Scope | Command |
+|---|---|---|
+| Codex, Antigravity | One project | `node <clone>/scripts/install-agents.mjs` |
+| Codex | All projects | `node <clone>/scripts/install-agents.mjs --to ~/.agents` |
+| Antigravity | All projects | `node <clone>/scripts/install-agents.mjs --to ~/.gemini/config` |
+
+The installer writes the skills to `<folder>/skills/` and the scripts to `<folder>/scripts/`. The default folder is `.agents` in the current folder. Run the command again after you pull a new version.
+
+Do not install this copy for Claude Code. Claude Code uses the plugin, and the plugin hook runs the linter for it.
 
 ## Limits
 

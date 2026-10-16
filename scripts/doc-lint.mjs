@@ -93,6 +93,8 @@ const stripInline = (s) =>
 
 // forced: null (use the front matter), 'ste80', or 'req'.
 function lint(text, forced) {
+  // Some Windows editors and shells start a UTF-8 file with a byte order mark.
+  text = text.replace(/^﻿/, '');
   const { meta, bodyStart } = parseFrontMatter(text);
   const style = (meta.style || '').toLowerCase();
   const marked = meta.ba_doc || style;

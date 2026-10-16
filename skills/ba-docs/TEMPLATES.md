@@ -67,6 +67,88 @@ One table:
 
 Type is one of: fact, constraint, action enabler, inference, computation. One rule per row. A rule states policy, not system behaviour: "A Player can hold at most 2 future Bookings", and the SRS says what the system does about it.
 
+## Acceptance criteria (`acceptance`)
+
+One section for each use case or feature. The heading names it with its label: "Book a Court (UC-1)". Under it, one table with one row for each criterion:
+
+| AC-n | Given | When | Then | Origin |
+|---|---|---|---|---|
+
+- **AC-n**: the label. A test takes the label as the start of its name.
+- **Given**: the state before the action, with real values.
+- **When**: one action or event.
+- **Then**: the result that a test can observe, with real values.
+- **Origin**: the flow label (`UC-1`, `UC-1 1.0.E3`), the business rule (`BR-4`), or the requirement tag that the criterion checks.
+
+Write the header cell as plain `AC-n`, without backticks. `doc-lint` finds the label column by that text.
+
+## Backlog (`backlog`)
+
+One table with one row for each story. Sort the rows by priority.
+
+| US-n | Story | Origin | Priority | Estimate | Sprint | Status | AC-n labels |
+|---|---|---|---|---|---|---|---|
+
+- **US-n**: the label.
+- **Story**: "As a <user class>, I want <action>, so that <result>." The user class is a name from the glossary. The story points to its use case and does not repeat the steps.
+- **Origin**: the feature (`FE-n`) or use case (`UC-n`) that the story comes from.
+- **Priority**: the scale of the use cases.
+- **Estimate**: in the unit of the team, or `TBD` with an owner.
+- **Sprint**: the name of the sprint, or `none`.
+- **Status**: `planned`, `in sprint`, or `done`. A story is `done` only when the test of each of its criteria passes.
+- **AC-n labels**: the criteria in the acceptance document. A story with no criterion is not ready for a sprint.
+
+Write the header cells as plain text, without backticks. `doc-lint` finds the label column by the text `US-n`.
+
+## Test plan (`test-plan`)
+
+A test plan defines no labels. It only cites them, so it needs the use cases and the `AC-n` labels, not the design or the code. Sections in this order:
+
+1. **Scope**: the features and use cases under test, by `FE-n` and `UC-n`, and what the plan does not test.
+2. **Approach**: the test levels and the test types. Levels are, for example, unit, API, and end to end. Types are, for example, functional and performance.
+3. **Entry and exit criteria**: when testing starts, and when it can stop.
+4. **Environment and test data**: what each level needs. Give real values for each `AC-n`: names, dates, amounts.
+5. **Risks**: what can stop or weaken the testing. Each risk has an owner.
+6. **Coverage**: one table, with one row for each test.
+
+| AC-n | Test name | Level | Status |
+|---|---|---|---|
+
+- **AC-n**: the criterion in the acceptance document that the test checks. A criterion with two tests has two rows.
+- **Test name**: starts with the label, as in `AC-3: a booking that overlaps another is refused`.
+- **Level**: one of the levels in Approach.
+- **Status**: `planned`, `written`, `passing`, or `failing`.
+
+A criterion with no row is a gap in the plan.
+
+## Screens (`screens`)
+
+One section for each screen of the dialog map. The heading is the name of the screen in the map. Each section holds one table. The table says what the screen must hold, not how it looks. The visual design stays with the designer.
+
+| Row | Content |
+|---|---|
+| Name | the name that the dialog map uses |
+| Purpose | one sentence: what the user does here |
+| Fields | each field with its type and its validation rule |
+| Actions | each action with its result: the next screen, or the change in data |
+| Messages | each message, and the event that shows it |
+| Labels | the `UC-n` flows and the `UI-n` items that the screen serves |
+
+A field with a limit cites the business rule: `Duration: 1 or 2 hours (BR-2)`. Cite only labels that exist in the set. A screen specification defines no labels. It only cites them, as a test plan does.
+
+## Reading map (`README.md`)
+
+The file `README.md` in the requirements folder tells each role what to read. It is not a `ba_doc` type. Start it with the comment `<!-- style: ste80 -->`. It holds one table:
+
+| Role | Read in this order |
+|---|---|
+| Developer | SRS, data dictionary, `acceptance.md`, glossary |
+| Designer | use cases, `screens.md`, dialog map, glossary |
+| Tester | use cases, business rules, `acceptance.md`, `test-plan.md` |
+
+- Name only documents that exist in the folder. Give each as a link. A dialog map lives in `models.md`, so link that file.
+- Add a row for a new role when the project has one. Add a document to a row when a new document helps that role.
+
 ## Data dictionary (`data-dictionary`)
 
 One table, entries in alphabetical order:

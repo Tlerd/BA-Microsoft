@@ -1,7 +1,7 @@
 {
   "name": "ba-kit",
-  "version": "0.5.0",
-  "description": "Requirements interview, requirements documents, diagrams, and plain technical English (80% of the way to ASD-STE100): five skills, one lint hook, three scripts.",
+  "version": "0.6.0",
+  "description": "Requirements interview and documents, feature briefs, tech-lead reviews, interactive handbooks, diagrams, and plain technical English (80% of the way to ASD-STE100): eight skills, one reviewer agent, one lint hook, five scripts.",
   "author": {
     "name": "Tlerd",
     "url": "https://github.com/Tlerd"
@@ -14,7 +14,10 @@
     "use-cases",
     "mermaid",
     "ste100",
-    "technical-writing"
+    "technical-writing",
+    "tech-lead",
+    "adr",
+    "design-patterns"
   ],
   "license": "MIT"
 }

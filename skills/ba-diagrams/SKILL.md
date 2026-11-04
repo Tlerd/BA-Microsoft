@@ -1,6 +1,6 @@
 ---
 name: ba-diagrams
-description: Diagrams and models as Mermaid in Markdown. Use when the user asks for a diagram, or when a requirement, design, or explanation needs a context diagram, use case diagram, swimlane, state diagram, ERD, data flow diagram, dialog map, sequence diagram, decision table, or feature tree.
+description: Diagrams and models as Mermaid in Markdown. Use when the user asks for a diagram, or when a requirement, design, or explanation needs a context diagram, use case diagram, swimlane, state diagram, ERD, data flow diagram, dialog map, sequence diagram, decision table, or feature tree. Not for requirements prose or a document outline: use ba-docs.
 effort: medium
 ---
 
@@ -25,7 +25,7 @@ A model shows what prose hides: a missing flow, a state with no exit, an entity 
 
 Listen to the source text: nouns become actors, entities, stores, or lanes. Verbs become processes, use cases, or transitions. "If" becomes a decision.
 
-Notation and a working snippet for each model are in [`NOTATION.md`](NOTATION.md). Read the snippet for the model you chose before you write it.
+Notation and a working snippet for each model are in [`references/NOTATION.md`](references/NOTATION.md). Read the snippet for the model you chose before you write it.
 
 ## Rules for every diagram
 
@@ -34,13 +34,13 @@ Notation and a working snippet for each model are in [`NOTATION.md`](NOTATION.md
 - Every arrow has a label, except in a use case diagram.
 - Put this after the block: `Figure N. <title>` on its own line, then one line that tells the reader what the shapes mean.
 - Put the diagram in the document section it explains, and refer to it from the text ("see Figure 3").
-- When the user asks for motion or animation, animate the arrows of one path: see `Animated arrow` in `NOTATION.md`.
+- When the user asks for motion or animation, animate the arrows of one path: see `Animated arrow` in `references/NOTATION.md`.
 
 ## Steps
 
 1. Name the question the diagram answers and choose the model from the table.
 2. List the elements from the source documents or the code, each with its label. An element with no source is a question for the user.
-3. Write the diagram from the snippet in `NOTATION.md`.
+3. Write the diagram from the snippet in `references/NOTATION.md`.
 4. Cross-check it against a second model: every data store in a DFD is an entity in the ERD. Every state change is caused by some use case. Every actor in the context diagram appears in a use case. Every screen in a dialog map has a table in `screens.md`, and every table there names a screen in the map.
 5. Render it:
 

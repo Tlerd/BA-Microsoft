@@ -1,6 +1,6 @@
 ---
 name: ste
-description: Plain technical English, 80% of the way to ASD-STE100. Use when writing or rewriting an English document for people to read (README, guide, report, specification, requirements), or when the user asks for STE or "simplified technical English".
+description: Plain technical English, 80% of the way to ASD-STE100. Use when writing or rewriting an English document for people to read (README, guide, report, specification, requirements), or when the user asks for STE or "simplified technical English". Not for code, commit messages, or chat replies.
 effort: low
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: feature-brief
-description: Goal and non-goal brief for one feature slice, from the database to the screen. Use when the user picks the next feature to build, asks for a brief, ticket, or issue for a coding agent, or before an agent codes a slice end to end.
+description: Goal and non-goal brief for one feature slice, from the database to the screen. Use when the user picks the next feature to build, asks for a brief, ticket, or issue for a coding agent, or before an agent codes a slice end to end. Not for requirements for a whole product: use ba-intake and ba-docs.
 ---
 
 A feature brief is the contract for one **vertical slice**: one user-visible result that crosses every layer (data, API, screen) and ships behind its own tests. An agent codes from the brief alone, so the brief must leave zero guesses.
@@ -11,7 +11,7 @@ A feature brief is the contract for one **vertical slice**: one user-visible res
 
 2. **Cut the slice.** The slice delivers one result that a user can see and check. It fits in 1 to 3 pull requests of about 400 changed lines or fewer. When the result is larger, split it, and give each part its own brief. Done when the goal fits in one sentence with one actor and one result.
 
-3. **Write the brief** from [TEMPLATE.md](TEMPLATE.md) to `docs/briefs/<id>-<slug>.md` (or the folder that `AGENTS.md` names), in the language of the user, with `style: ste80` in the front matter. Every non-goal states why it is out. Every acceptance criterion has real values and a number `AC-n`. Done when every section of the template is filled, or holds `TBD` with the person who decides.
+3. **Write the brief** from [assets/TEMPLATE.md](assets/TEMPLATE.md) to `docs/briefs/<id>-<slug>.md` (or the folder that `AGENTS.md` names), in the language of the user, with `style: ste80` in the front matter. Every non-goal states why it is out. Every acceptance criterion has real values and a number `AC-n`. Done when every section of the template is filled, or holds `TBD` with the person who decides.
 
 4. **Check the brief** against these questions. A "no" means the brief is not ready:
 

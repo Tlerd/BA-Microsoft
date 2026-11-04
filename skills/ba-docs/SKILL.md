@@ -1,6 +1,6 @@
 ---
 name: ba-docs
-description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, acceptance criteria, a backlog of user stories, a test plan, screen specifications, a data dictionary, a glossary, or a risk list.
+description: Requirements documents for a software product. Use when writing or extending a vision and scope document, use cases, an SRS, business rules, acceptance criteria, a backlog of user stories, a test plan, screen specifications, a data dictionary, a glossary, or a risk list. Not for diagrams: use ba-diagrams. Not for an interview that finds the requirements: use ba-intake.
 ---
 
 The method follows mainstream requirements engineering practice (Wiegers and Beatty, *Software Requirements*, 3rd edition): business requirements first, then user requirements, then functional requirements, each traced to the one before.
@@ -8,7 +8,7 @@ The method follows mainstream requirements engineering practice (Wiegers and Bea
 ## Format authority
 
 1. **The project's own templates.** If `AGENTS.md` names a template folder, or `docs/requirements/templates/` exists, those templates decide headings and order. Read the template and any worked example beside it in full.
-2. **Otherwise** the outlines in [`TEMPLATES.md`](TEMPLATES.md). Read the outline for the document you write.
+2. **Otherwise** the outlines in [`assets/TEMPLATES.md`](assets/TEMPLATES.md). Read the outline for the document you write.
 
 A template exported from Word can carry inline base64 images. Read such a file through the script, which prints the text only:
 

@@ -1,6 +1,6 @@
 ---
 name: ba-intake
-description: Requirements interview that starts from an outcome. Use when the user names a product, feature, or result to build and no requirements document covers it, asks you to act as the business analyst, to write questions for someone else, or to list the open items.
+description: Requirements interview that starts from an outcome. Use when the user names a product, feature, or result to build and no requirements document covers it, asks you to act as the business analyst, to write questions for someone else, or to list the open items. Not for writing the final documents: use ba-docs. Not for one feature slice: use feature-brief.
 ---
 
 The user gives an outcome. You run an **interview** until you can write the requirements with zero guesses. Then you record the answers in an intake brief.

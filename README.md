@@ -131,7 +131,7 @@ node --test tests/doc-lint.test.mjs
 
 ## Your own templates
 
-The skill `ba-docs` uses the outlines in `skills/ba-docs/TEMPLATES.md`. To use your own templates, put them in `docs/requirements/templates/`, or name their folder in the `AGENTS.md` file of the project. Your templates then decide the headings and their order.
+The skill `ba-docs` uses the outlines in `skills/ba-docs/assets/TEMPLATES.md`. To use your own templates, put them in `docs/requirements/templates/`, or name their folder in the `AGENTS.md` file of the project. Your templates then decide the headings and their order.
 
 ## Other agents
 

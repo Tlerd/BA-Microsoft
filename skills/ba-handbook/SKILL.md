@@ -1,6 +1,6 @@
 ---
 name: ba-handbook
-description: Interactive HTML handbook built from checked content. Use when the user asks for an interactive page, catalog, lookup table, or step-by-step process map, or asks to turn a document or a conversation into something the team can browse.
+description: Interactive HTML handbook built from checked content. Use when the user asks for an interactive page, catalog, lookup table, or step-by-step process map, or asks to turn a document or a conversation into something the team can browse. Not for a Markdown document or a diagram: use ba-docs or ba-diagrams.
 ---
 
 A handbook is one offline HTML page with tabs. Each tab is a **catalog** (filter, search, list with a detail panel) or a **pipeline** (numbered stages with a detail panel). You write the content as a data file. The script `handbook-build.mjs` checks the data and writes the page.

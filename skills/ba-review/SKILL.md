@@ -1,6 +1,6 @@
 ---
 name: ba-review
-description: Review of a requirements document for defects. Use when the user asks to review, check, or inspect an SRS, use cases, business rules, or a vision and scope document. Pass the file path as the argument. When the user pasted the document, pass its full text as the argument, because the reviewer cannot see the chat. Reply with the returned report as your final answer. Do not summarize or rewrite it.
+description: Review of a requirements document for defects. Use when the user asks to review, check, or inspect an SRS, use cases, business rules, or a vision and scope document. Pass the file path as the argument. When the user pasted the document, pass its full text as the argument, because the reviewer cannot see the chat. Reply with the returned report as your final answer. Do not summarize or rewrite it. Not for writing or fixing a document: use ba-docs.
 argument-hint: "[file path, or the full text of the document]"
 context: fork
 agent: ba-kit:requirements-reviewer

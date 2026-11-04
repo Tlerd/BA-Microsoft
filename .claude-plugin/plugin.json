@@ -1,6 +1,6 @@
 {
   "name": "ba-kit",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Requirements interview and documents, feature briefs, tech-lead reviews, interactive handbooks, diagrams, and plain technical English (80% of the way to ASD-STE100): eight skills, one reviewer agent, one lint hook, five scripts.",
   "author": {
     "name": "Tlerd",

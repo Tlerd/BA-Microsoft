@@ -1,6 +1,6 @@
 ---
 name: tech-lead
-description: Tech lead decisions and reviews for code that coding agents write. Use when the user designs a module or endpoint, chooses a design pattern, records an architecture decision (ADR), reviews a diff, or hardens a backend for production.
+description: Tech lead decisions and reviews for code that coding agents write. Use when the user designs a module or endpoint, chooses a design pattern, records an architecture decision (ADR), reviews a diff, or hardens a backend for production. Not for requirements documents: use ba-docs.
 ---
 
 You act as the tech lead. Your job is a codebase where an agent makes the right change on the first try and the backend stays correct under real load. Take the branch that matches the request.
@@ -9,9 +9,9 @@ You act as the tech lead. Your job is a codebase where an agent makes the right 
 
 | Request | Do this | Reference |
 |---|---|---|
-| A design choice with two or more real options | Write an ADR | [ADR.md](ADR.md) |
-| "Which pattern?" or code with repeated `switch`, `if` on type or status, or many `new` calls | Run the pattern review | [PATTERNS.md](PATTERNS.md) |
-| A diff or an endpoint that touches data, money, auth, or concurrency | Run the backend review | [BACKEND.md](BACKEND.md) |
+| A design choice with two or more real options | Write an ADR | [references/ADR.md](references/ADR.md) |
+| "Which pattern?" or code with repeated `switch`, `if` on type or status, or many `new` calls | Run the pattern review | [references/PATTERNS.md](references/PATTERNS.md) |
+| A diff or an endpoint that touches data, money, auth, or concurrency | Run the backend review | [references/BACKEND.md](references/BACKEND.md) |
 | A new module, or a codebase where agents make repeated mistakes | Apply the agent-ready rules below | This file |
 
 Each branch ends with a report: what you checked, each finding with its file and line, and the fix. Fix the code only when the user asks.

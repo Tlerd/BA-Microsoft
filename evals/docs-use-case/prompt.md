@@ -1,5 +1,5 @@
 ---
-description: A user asks for a use case from a short description. The document must carry the rows and labels of the use case outline in TEMPLATES.md.
+description: A user asks for a use case from a short description. The document must carry the rows and labels of the use case outline in assets/TEMPLATES.md.
 max_turns: 15
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
